@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roteiro SP — Comer & Beber</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14110E; --bg2:#1B1611; --card:#211B16; --card2:#2A221C;
+    --line:rgba(242,235,222,.10); --line2:rgba(242,235,222,.16);
+    --ink:#F3ECDE; --muted:#A0917F; --faint:#7A6E60;
+    --amber:#E8A33D; --red:#D6452F; --green:#7DB082; --indigo:#6E92C4; --violet:#A98BD0;
+    --display:'Bricolage Grotesque',sans-serif; --body:'Inter',sans-serif; --mono:'Space Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  /* lantern glow header */
+  header{position:relative;padding:34px 22px 26px;overflow:hidden;border-bottom:1px solid var(--line)}
+  header::before{content:"";position:absolute;top:-160px;left:50%;transform:translateX(-50%);
+    width:520px;height:300px;background:radial-gradient(ellipse at center,rgba(232,163,61,.22),transparent 65%);pointer-events:none}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,7vw,46px);line-height:.98;margin:0;letter-spacing:-.01em}
+  h1 .red{color:var(--red)}
+  .sub{margin:12px 0 0;color:var(--muted);max-width:60ch;font-size:14px}
+  .legend{display:flex;flex-wrap:wrap;gap:7px 14px;margin-top:18px}
+  .legend span{font-family:var(--mono);font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 8px currentColor}
+
+  /* map */
+  #map{height:46vh;min-height:300px;width:100%;background:#0d0b09;z-index:0}
+  .leaflet-container{font-family:var(--body)}
+  .leaflet-popup-content-wrapper{background:var(--card2);color:var(--ink);border-radius:12px;border:1px solid var(--line2);box-shadow:0 12px 30px rgba(0,0,0,.5)}
+  .leaflet-popup-tip{background:var(--card2);border:1px solid var(--line2)}
+  .leaflet-popup-content{margin:12px 14px}
+  .pop-name{font-family:var(--display);font-weight:700;font-size:15px}
+  .pop-meta{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:3px}
+  .pop-link{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(232,163,61,.4)}
+  .pin{width:16px;height:16px;border-radius:50%;border:2px solid rgba(0,0,0,.55);box-shadow:0 0 10px currentColor,0 1px 4px rgba(0,0,0,.6)}
+
+  /* layout */
+  main{max-width:760px;margin:0 auto;padding:26px 18px 70px}
+  .region{margin-top:34px}
+  .region:first-child{margin-top:8px}
+  .region-head{display:flex;align-items:baseline;gap:12px;margin:0 0 4px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .region-head h2{font-family:var(--display);font-weight:700;font-size:19px;margin:0;letter-spacing:-.01em}
+  .region-head .count{font-family:var(--mono);font-size:11px;color:var(--faint);margin-left:auto}
+  .region-head .marker{width:10px;height:10px;border-radius:50%;align-self:center;box-shadow:0 0 8px currentColor}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;margin-top:12px;
+    cursor:pointer;transition:border-color .18s,background .18s,transform .18s}
+  .card:hover{border-color:var(--line2);background:var(--card2)}
+  .card:active{transform:scale(.995)}
+  .card.active{border-color:var(--amber);box-shadow:0 0 0 1px rgba(232,163,61,.25)}
+  .card-top{display:flex;align-items:flex-start;gap:10px}
+  .card-name{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01em;margin:0;flex:1}
+  .card-name .kanji{color:var(--faint);font-weight:500;font-size:14px;margin-left:5px}
+  .rating{font-family:var(--mono);font-size:12px;color:var(--amber);white-space:nowrap;padding-top:3px}
+  .rating .cnt{color:var(--faint)}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0 0}
+  .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+  .tag.warn{color:#E8B863;border-color:rgba(232,184,99,.3)}
+  /* the comment — signature element: a chat note pinned to each place */
+  .note{position:relative;margin:13px 0 0;padding:11px 13px 11px 15px;background:rgba(232,163,61,.06);
+    border-left:2px solid var(--amber);border-radius:0 9px 9px 0;font-size:13.5px;color:#E7DECD}
+  .note .who{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);margin-bottom:4px}
+  .foot{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+  .foot .addr{font-size:12px;color:var(--faint);flex:1;min-width:140px}
+  .maps{font-family:var(--mono);font-size:11px;text-decoration:none;color:var(--ink);
+    border:1px solid var(--line2);border-radius:999px;padding:6px 12px;white-space:nowrap;transition:border-color .15s,color .15s}
+  .maps:hover{border-color:var(--amber);color:var(--amber)}
+
+  footer{max-width:760px;margin:0 auto;padding:0 18px 50px;color:var(--faint);font-size:12px}
+  footer .rule{height:1px;background:var(--line);margin-bottom:16px}
+  @media (max-width:480px){ #map{height:40vh} .card-name{font-size:16.5px} }
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">São Paulo · indicações do Augusto</p>
+  <h1>Comer &amp; beber <span class="red">em Sampa</span></h1>
+  <p class="sub">Os lugares que o Augusto Mylla mandou pra viagem, no mapa e com o recado dele em cada um. Toca num card pra centralizar no mapa.</p>
+  <div class="legend" id="legend"></div>
+</header>
+
+<div id="map"></div>
+
+<main id="list"></main>
+
+<footer>
+  <div class="rule"></div>
+  16 pontos · 5 regiões. Notas são as mensagens do Augusto (e uma do Mart no KuroMoon). Sem preços fixos — confere o dia de fechamento antes de sair, alguns fecham seg/dom.
+</footer>
+
+<script>
+const REGIONS = {
+  pinheiros:{label:"Pinheiros / Vila Madalena", color:"#E8A33D"},
+  scecilia:{label:"Santa Cecília", color:"#7DB082"},
+  centro:{label:"Centro / República", color:"#D6452F"},
+  liberdade:{label:"Liberdade / Paraíso", color:"#6E92C4"},
+  barra:{label:"Barra Funda", color:"#A98BD0"}
+};
+
+const PLACES = [
+  {r:"pinheiros", name:"Izakaya Matsu", type:"Japonês · izakaya", rating:4.6, cnt:2368, lat:-23.566374, lng:-46.689812,
+   tags:["Reservar / fila","Fecha dom"], addr:"Av. Pedroso de Morais, 403",
+   who:"Augusto", note:"A comida no Matsu é MUITO boa. Reservar ou chegar na hora que abre — faz muita fila. Quando lota, fecham a porta.",
+   pid:"ChIJqbbe9Z9XzpQRm0dOqJlEU64"},
+  {r:"pinheiros", name:"Hirá Ramen Izakaya", type:"Japonês · ramen", rating:4.5, cnt:3796, lat:-23.5567178, lng:-46.6907671,
+   tags:[], addr:"R. Fradique Coutinho, 1240",
+   who:"Augusto", note:"Nessa mesma onda tem o Hirá Izakaya. Sensacional também.",
+   pid:"ChIJo340ar1XzpQRLIpSoelC1CM"},
+  {r:"pinheiros", name:"Sede261", type:"Bar de vinho natural", rating:4.1, cnt:460, lat:-23.566275, lng:-46.6887241,
+   tags:["Qua–Dom"], addr:"R. Benjamim Egas, 261",
+   who:"Augusto", note:"Coloca mesinha na rua e a galera fica ali bebendo. Do lado do Izakaya Matsu.",
+   pid:"ChIJE5QN7p9XzpQRfI_P48yKi6g"},
+  {r:"pinheiros", name:"Boca de Ouro", type:"Bar de drinks", rating:4.6, cnt:1091, lat:-23.5597444, lng:-46.6836806,
+   tags:["Fecha seg"], addr:"R. Cônego Eugênio Leite, 1121",
+   who:"Augusto", note:"Bar de drinks ali por perto, o clássico Boca de Ouro. Pede o bolovo.",
+   pid:"ChIJbZO86ptXzpQR1Njp4N2Cpdc"},
+  {r:"pinheiros", name:"Shihoma Pasta Fresca", type:"Italiano · massa", rating:4.2, cnt:1073, lat:-23.5539502, lng:-46.6859644,
+   tags:["Reservar","Meio caro","Fecha seg"], addr:"R. Medeiros de Albuquerque, 431",
+   who:"Augusto", note:"Consegui reservar. Quase nunca tem vaga, além de ser meio caro.",
+   pid:"ChIJ-8XflpdXzpQROQZmrseOnZk"},
+
+  {r:"scecilia", name:"Borgo Mooca", type:"Italiano contemporâneo", rating:4.3, cnt:2119, lat:-23.5385423, lng:-46.6540956,
+   tags:["Reserva obrigatória","Fecha seg"], addr:"R. Barão de Tatuí, 302",
+   who:"Augusto", note:"Italiano contemporâneo bem massa, descoladão. Meio carinho mas muito bom.",
+   pid:"ChIJh6Tp4wNczpQRMgrB5pUjt1U"},
+  {r:"scecilia", name:"Sotero", type:"Comida baiana", rating:4.3, cnt:2366, lat:-23.5383549, lng:-46.6541328,
+   tags:["Mais baratão"], addr:"R. Barão de Tatuí, 282",
+   who:"Augusto", note:"Do lado do Borgo. Muito bom e bem mais baratão. Clima meio boteco mas a comida sensacional.",
+   pid:"ChIJeVO4-D5YzpQRhfI21FZJELk"},
+
+  {r:"centro", name:"A Casa do Porco", type:"Brasileiro · ícone", rating:4.4, cnt:14916, lat:-23.5449136, lng:-46.6447336,
+   tags:["Sempre fila"], addr:"R. Araújo, 124",
+   who:"Augusto", note:"O clássico. Se não conseguir comer aqui, vai no bandejão deles (Merenda da Cidade).",
+   pid:"ChIJK76a5E5YzpQRCoY7nm1M3-k"},
+  {r:"centro", name:"Merenda da Cidade", type:"Bandejão da Casa do Porco", rating:4.5, cnt:768, lat:-23.5459222, lng:-46.6459906,
+   tags:["Só almoço 12–16h"], addr:"R. Epitácio Pessoa, 98",
+   who:"Augusto", note:"Fazem um prato por dia, preço mais em conta, comida simples e boa. Vem suco junto.",
+   pid:"ChIJUaSbDZJZzpQRd4tnrmDtDvE"},
+  {r:"centro", name:"Z Deli", type:"Hambúrguer · sanduíche", rating:4.4, cnt:6001, lat:-23.5446214, lng:-46.6456894,
+   tags:["Perto do Porco"], addr:"R. Bento Freitas, 314",
+   who:"Augusto", note:"Hambúrguer foda demais, tudo muito bom. O melhor hambúrguer da sua vida.",
+   pid:"ChIJHUPQJU9YzpQREEI1h-ij_24"},
+  {r:"centro", name:"Bia Hoi SP", type:"Vietnamita", rating:4.2, cnt:1596, lat:-23.5456593, lng:-46.6467443,
+   tags:[], addr:"R. Rego Freitas, 428",
+   who:"Augusto", note:"Ali perto também tem um vietnamita.",
+   pid:"ChIJkZb9SUlYzpQRNATPsPHrUoM"},
+  {r:"centro", name:"Cuia", type:"Brasileiro · no Copan", rating:4.5, cnt:1395, lat:-23.5462205, lng:-46.6439429,
+   tags:["Chega sem reserva"], addr:"Av. Ipiranga, 200 — loja 48",
+   who:"Augusto", note:"Fica no Copan, é daquela chef Bel Coelho. Bem bom e preço ok. Lá dá pra chegar sem reserva.",
+   pid:"ChIJf0pCvDBZzpQRIwrsGaEe5gM"},
+  {r:"centro", name:"Galeria do Rock", type:"Sebos · vinil · cartão postal", rating:4.5, cnt:100939, lat:-23.5435214, lng:-46.6385411,
+   tags:["Seg–Sáb","Palpite — não conhece bem"], addr:"Av. São João, 439",
+   who:"Augusto", note:"Pra sebo e cartão postal velho, acho que lá pros lados da Galeria do Rock. Mas não conheço bem.",
+   pid:"ChIJw5v_nFFYzpQRcRm-UHFepWo"},
+
+  {r:"liberdade", name:"Porque Sim", type:"Japonês", rating:4.7, cnt:6519, lat:-23.5575723, lng:-46.6357203,
+   tags:["Vale a fila","Fecha qua"], addr:"R. Thomaz Gonzaga, 75",
+   who:"Augusto", note:"Na Liberdade eu curto um chamado “Porque Sim”. Ótimo custo-benefício.",
+   pid:"ChIJh-Aho6hZzpQRrjYN_2is5ek"},
+  {r:"liberdade", name:"KuroMoon", kanji:"黒文", type:"Coreano / japonês moderninho", rating:4.2, cnt:717, lat:-23.5728355, lng:-46.6495297,
+   tags:["Reserva impossível","Fecha dom"], addr:"R. Teixeira da Silva, 596",
+   who:"Mart", note:"Super bombado, reserva impossível. Reservar pelo Insta (@kuromoon.br) ou chegar 18h45 pra fila antes de abrir (19h).",
+   pid:"ChIJXZAGTgdZzpQRuIlB34_82Kc"},
+
+  {r:"barra", name:"Komah", type:"Coreano · Michelin", rating:4.6, cnt:3167, lat:-23.5266098, lng:-46.6518638,
+   tags:["Não aceita reserva","Fecha dom"], addr:"R. Cônego Vicente Miguel Marino, 378",
+   who:"Augusto", note:"Tem o Komah também ❤️ Coreano famosinho. Não aceita reserva, chegar na abertura.",
+   pid:"ChIJd2AWuBJYzpQRZZrUwwuFdPc"}
+];
+
+const mapsUrl = p => "https://www.google.com/maps/place/?q=place_id:"+p.pid;
+
+/* ---- legend ---- */
+const legend = document.getElementById('legend');
+Object.values(REGIONS).forEach(rg=>{
+  const s=document.createElement('span');
+  s.innerHTML=`<i class="dot" style="background:${rg.color};color:${rg.color}"></i>${rg.label}`;
+  legend.appendChild(s);
+});
+
+/* ---- map ---- */
+const map = L.map('map',{scrollWheelZoom:false,zoomControl:true}).setView([-23.553,-46.655],13);
+let usingFallback=false;
+const carto = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+  attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19,subdomains:'abcd'
+}).addTo(map);
+carto.on('tileerror',()=>{
+  if(usingFallback) return; usingFallback=true;
+  map.removeLayer(carto);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; OpenStreetMap',maxZoom:19
+  }).addTo(map);
+});
+
+const markers = {};
+PLACES.forEach((p,i)=>{
+  const color = REGIONS[p.r].color;
+  const icon = L.divIcon({className:'',html:`<div class="pin" style="background:${color};color:${color}"></div>`,iconSize:[16,16],iconAnchor:[8,8]});
+  const m = L.marker([p.lat,p.lng],{icon}).addTo(map);
+  m.bindPopup(
+    `<div class="pop-name">${p.name}${p.kanji?` <span style="color:#7A6E60">${p.kanji}</span>`:''}</div>
+     <div class="pop-meta">★ ${p.rating.toString().replace('.',',')} · ${p.type}</div>
+     <a class="pop-link" href="${mapsUrl(p)}" target="_blank" rel="noopener">abrir no Google Maps ↗</a>`,
+    {closeButton:false}
+  );
+  m.on('click',()=>focusCard(i));
+  markers[i]=m;
+});
+
+/* ---- list ---- */
+const list = document.getElementById('list');
+const cardEls = {};
+const order = Object.keys(REGIONS);
+order.forEach(rk=>{
+  const inRegion = PLACES.map((p,i)=>({p,i})).filter(x=>x.p.r===rk);
+  if(!inRegion.length) return;
+  const rg = REGIONS[rk];
+  const sec = document.createElement('section');
+  sec.className='region';
+  sec.innerHTML = `<div class="region-head"><span class="marker" style="background:${rg.color};color:${rg.color}"></span><h2>${rg.label}</h2><span class="count">${inRegion.length} ${inRegion.length>1?'lugares':'lugar'}</span></div>`;
+  inRegion.forEach(({p,i})=>{
+    const card=document.createElement('article');
+    card.className='card';
+    const tags = p.tags.map(t=>{
+      const warn=/fila|caro|imposs|obrigat|fecha|reserva|palpite|sempre/i.test(t);
+      return `<span class="tag${warn?' warn':''}">${t}</span>`;
+    }).join('');
+    card.innerHTML=`
+      <div class="card-top">
+        <h3 class="card-name">${p.name}${p.kanji?`<span class="kanji">${p.kanji}</span>`:''}</h3>
+        <div class="rating">★ ${p.rating.toString().replace('.',',')} <span class="cnt">(${p.cnt.toLocaleString('pt-BR')})</span></div>
+      </div>
+      <div class="tags"><span class="tag">${p.type}</span>${tags}</div>
+      <div class="note"><span class="who">${p.who} disse</span>${p.note}</div>
+      <div class="foot">
+        <span class="addr">${p.addr}</span>
+        <a class="maps" href="${mapsUrl(p)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Abrir no Maps ↗</a>
+      </div>`;
+    card.addEventListener('click',()=>{ focusCard(i,true); });
+    sec.appendChild(card);
+    cardEls[i]=card;
+  });
+  list.appendChild(sec);
+});
+
+let activeIdx=null;
+function focusCard(i, fromCard){
+  if(activeIdx!==null && cardEls[activeIdx]) cardEls[activeIdx].classList.remove('active');
+  activeIdx=i;
+  cardEls[i].classList.add('active');
+  const p=PLACES[i];
+  map.flyTo([p.lat,p.lng], Math.max(map.getZoom(),15),{duration:.6});
+  markers[i].openPopup();
+  if(fromCard){
+    const y=document.getElementById('map').offsetTop;
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+/* fit all on load */
+map.fitBounds(PLACES.map(p=>[p.lat,p.lng]),{padding:[40,40]});
+</script>
+</body>
+</html>

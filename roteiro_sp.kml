@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Roteiro SP — Comer &amp; Beber</name>
+    <description>Indicacoes do Augusto Mylla para a viagem a Sao Paulo. 16 pontos em 5 regioes.</description>
+
+    <Style id="japa"><IconStyle><color>ff3da3e8</color><scale>1.1</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/red-circle.png</href></Icon></IconStyle></Style>
+    <Style id="bar"><IconStyle><color>ff865a3a</color><scale>1.1</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/blu-circle.png</href></Icon></IconStyle></Style>
+    <Style id="resto"><IconStyle><color>ff2f45d6</color><scale>1.1</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/grn-circle.png</href></Icon></IconStyle></Style>
+    <Style id="ponto"><IconStyle><color>ff3dd6e8</color><scale>1.1</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/ylw-stars.png</href></Icon></IconStyle></Style>
+
+    <Folder>
+      <name>Pinheiros / Vila Madalena</name>
+      <description>Tudo perto, da pra fazer a pe. Base da noite.</description>
+      <Placemark><name>Izakaya Matsu</name><styleUrl>#japa</styleUrl><description><![CDATA[Japones / izakaya — 4,6 (2368) · $$ · Pinheiros
+"A comida no Matsu e MUITO boa. Reservar ou chegar na hora que abre pq faz muita fila. Quando lota, fecha a porta." — Augusto
+Jantar 18h-23h · Fecha domingo · Av. Pedroso de Morais, 403
+https://www.google.com/maps/place/?q=place_id:ChIJqbbe9Z9XzpQRm0dOqJlEU64]]></description><Point><coordinates>-46.689812,-23.566374,0</coordinates></Point></Placemark>
+      <Placemark><name>Hira Ramen Izakaya</name><styleUrl>#japa</styleUrl><description><![CDATA[Japones / ramen — 4,5 (3796) · $$ · Pinheiros
+"Nessa mesma onda tem o Hira Izakaya. Sensacional tambem." — Augusto
+R. Fradique Coutinho, 1240
+https://www.google.com/maps/place/?q=place_id:ChIJo340ar1XzpQRLIpSoelC1CM]]></description><Point><coordinates>-46.6907671,-23.5567178,0</coordinates></Point></Placemark>
+      <Placemark><name>Sede261</name><styleUrl>#bar</styleUrl><description><![CDATA[Bar de vinho natural — 4,1 (460) · $$ · Pinheiros
+"Coloca mesinha na rua e a galera fica ali bebendo. Do lado do Izakaya Matsu." — Augusto
+Qua-Dom · Rua Benjamim Egas, 261
+https://www.google.com/maps/place/?q=place_id:ChIJE5QN7p9XzpQRfI_P48yKi6g]]></description><Point><coordinates>-46.6887241,-23.566275,0</coordinates></Point></Placemark>
+      <Placemark><name>Boca de Ouro</name><styleUrl>#bar</styleUrl><description><![CDATA[Bar de drinks classico — 4,6 (1091) · $$ · Pinheiros
+"Bar de drinks ali por perto, o classico Boca de Ouro." — Augusto · Pede o bolovo.
+Abre 18h · Fecha segunda · R. Conego Eugenio Leite, 1121
+https://www.google.com/maps/place/?q=place_id:ChIJbZO86ptXzpQR1Njp4N2Cpdc]]></description><Point><coordinates>-46.6836806,-23.5597444,0</coordinates></Point></Placemark>
+      <Placemark><name>Shihoma Pasta Fresca</name><styleUrl>#resto</styleUrl><description><![CDATA[Italiano / massa fresca — 4,2 (1073) · Vila Madalena
+"Consegui reservar. Quase nunca tem vaga, alem de ser meio caro." — Augusto
+Fecha segunda · R. Medeiros de Albuquerque, 431
+https://www.google.com/maps/place/?q=place_id:ChIJ-8XflpdXzpQROQZmrseOnZk]]></description><Point><coordinates>-46.6859644,-23.5539502,0</coordinates></Point></Placemark>
+    </Folder>
+
+    <Folder>
+      <name>Santa Cecilia</name>
+      <description>Borgo e Sotero sao vizinhos de porta.</description>
+      <Placemark><name>Borgo Mooca</name><styleUrl>#resto</styleUrl><description><![CDATA[Italiano contemporaneo — 4,3 (2119) · $$$ · Santa Cecilia
+"Italiano contemporaneo bem massa, descoladao. Meio carinho mas muito bom." — Augusto
+Reserva obrigatoria · Fecha segunda · R. Barao de Tatui, 302
+https://www.google.com/maps/place/?q=place_id:ChIJh6Tp4wNczpQRMgrB5pUjt1U]]></description><Point><coordinates>-46.6540956,-23.5385423,0</coordinates></Point></Placemark>
+      <Placemark><name>Sotero Cozinha Original</name><styleUrl>#resto</styleUrl><description><![CDATA[Comida baiana — 4,3 (2366) · $$ · Santa Cecilia
+"Do lado do Borgo. Muito bom e bem mais baratao. Clima meio boteco mas a comida sensacional." — Augusto
+R. Barao de Tatui, 282
+https://www.google.com/maps/place/?q=place_id:ChIJeVO4-D5YzpQRhfI21FZJELk]]></description><Point><coordinates>-46.6541328,-23.5383549,0</coordinates></Point></Placemark>
+    </Folder>
+
+    <Folder>
+      <name>Centro / Republica</name>
+      <description>Cluster da Casa do Porco. Quase tudo a pe um do outro.</description>
+      <Placemark><name>A Casa do Porco</name><styleUrl>#resto</styleUrl><description><![CDATA[Brasileiro / icone — 4,4 (14916) · $$$ · Republica
+"O classico. Se nao conseguir comer aqui, vai no bandejao deles (Merenda)." — Augusto · Sempre fila.
+R. Araujo, 124
+https://www.google.com/maps/place/?q=place_id:ChIJK76a5E5YzpQRCoY7nm1M3-k]]></description><Point><coordinates>-46.6447336,-23.5449136,0</coordinates></Point></Placemark>
+      <Placemark><name>Merenda da Cidade</name><styleUrl>#resto</styleUrl><description><![CDATA[Bandejao da Casa do Porco — 4,5 (768) · $$ · Republica
+"Fazem um prato por dia, preco mais em conta, comida simples e boa, vem suco junto." — Augusto
+So almoco 12h-16h · R. Epitacio Pessoa, 98
+https://www.google.com/maps/place/?q=place_id:ChIJUaSbDZJZzpQRd4tnrmDtDvE]]></description><Point><coordinates>-46.6459906,-23.5459222,0</coordinates></Point></Placemark>
+      <Placemark><name>Z Deli Sandwich Shop</name><styleUrl>#resto</styleUrl><description><![CDATA[Hamburguer / sanduiche — 4,4 (6001) · $$ · Vila Buarque
+"Hamburguer foda demais, tudo muito bom. Melhor hamburguer da sua vida." — Augusto · Perto do Porco.
+R. Bento Freitas, 314
+https://www.google.com/maps/place/?q=place_id:ChIJHUPQJU9YzpQREEI1h-ij_24]]></description><Point><coordinates>-46.6456894,-23.5446214,0</coordinates></Point></Placemark>
+      <Placemark><name>Bia Hoi SP</name><styleUrl>#japa</styleUrl><description><![CDATA[Vietnamita — 4,2 (1596) · $$ · Republica
+"Ali perto tambem tem um vietnamita." — Augusto
+R. Rego Freitas, 428
+https://www.google.com/maps/place/?q=place_id:ChIJkZb9SUlYzpQRNATPsPHrUoM]]></description><Point><coordinates>-46.6467443,-23.5456593,0</coordinates></Point></Placemark>
+      <Placemark><name>Cuia Cafe e Restaurante</name><styleUrl>#resto</styleUrl><description><![CDATA[Brasileiro — 4,5 (1395) · $$ · Republica (Copan)
+"Fica no Copan, da chef Bel Coelho. Bem bom e preco ok. Da pra chegar sem reserva." — Augusto
+Av. Ipiranga, 200 - loja 48
+https://www.google.com/maps/place/?q=place_id:ChIJf0pCvDBZzpQRIwrsGaEe5gM]]></description><Point><coordinates>-46.6439429,-23.5462205,0</coordinates></Point></Placemark>
+      <Placemark><name>Galeria do Rock</name><styleUrl>#ponto</styleUrl><description><![CDATA[Sebos / vinil / cartao postal — 4,5
+"Pra sebo e cartao postal velho, acho que la pros lados da Galeria do Rock. Mas nao conheco bem." — Augusto
+Seg-Sab · Av. Sao Joao, 439
+https://www.google.com/maps/place/?q=place_id:ChIJw5v_nFFYzpQRcRm-UHFepWo]]></description><Point><coordinates>-46.6385411,-23.5435214,0</coordinates></Point></Placemark>
+    </Folder>
+
+    <Folder>
+      <name>Liberdade / Paraiso</name>
+      <description>Lado leste/central.</description>
+      <Placemark><name>Restaurante Porque Sim</name><styleUrl>#japa</styleUrl><description><![CDATA[Japones — 4,7 (6519) · $$ · Liberdade
+"Na Liberdade eu curto um chamado Porque Sim." — Augusto · Otimo custo-beneficio, vale a fila.
+Fecha quarta · R. Thomaz Gonzaga, 75
+https://www.google.com/maps/place/?q=place_id:ChIJh-Aho6hZzpQRrjYN_2is5ek]]></description><Point><coordinates>-46.6357203,-23.5575723,0</coordinates></Point></Placemark>
+      <Placemark><name>KuroMoon</name><styleUrl>#japa</styleUrl><description><![CDATA[Coreano / japones moderninho — 4,2 (717) · Paraiso
+Indicacao do Mart: super bombado, reserva impossivel. Insta @kuromoon.br ou fila 18h45 antes de abrir (19h).
+Fecha domingo · R. Teixeira da Silva, 596
+https://www.google.com/maps/place/?q=place_id:ChIJXZAGTgdZzpQRuIlB34_82Kc]]></description><Point><coordinates>-46.6495297,-23.5728355,0</coordinates></Point></Placemark>
+    </Folder>
+
+    <Folder>
+      <name>Barra Funda</name>
+      <Placemark><name>Komah Restaurante</name><styleUrl>#japa</styleUrl><description><![CDATA[Coreano (Michelin) — 4,6 (3167) · $$ · Barra Funda
+"Tem o Komah tambem. Coreano famosinho." — Augusto · Nao aceita reserva, chegar na abertura.
+Fecha domingo · R. Conego Vicente Miguel Marino, 378
+https://www.google.com/maps/place/?q=place_id:ChIJd2AWuBJYzpQRZZrUwwuFdPc]]></description><Point><coordinates>-46.6518638,-23.5266098,0</coordinates></Point></Placemark>
+    </Folder>
+
+  </Document>
+</kml>
