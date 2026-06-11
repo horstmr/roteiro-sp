@@ -191,7 +191,7 @@ Object.values(REGIONS).forEach(rg=>{
 });
 
 /* ---- map ---- */
-const map = L.map('map',{scrollWheelZoom:false,zoomControl:true}).setView([-23.553,-46.655],13);
+const map = L.map('map',{scrollWheelZoom:true,zoomControl:true}).setView([-23.553,-46.655],13);
 let usingFallback=false;
 const carto = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
   attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19,subdomains:'abcd'
